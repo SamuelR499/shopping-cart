@@ -4,6 +4,7 @@ function createProductImageElement(imageSource) {
   img.src = imageSource;
   return img;
 }
+// dificuldade ta no maximo.. que isso...
 
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
