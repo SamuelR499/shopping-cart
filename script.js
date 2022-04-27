@@ -5,6 +5,7 @@ function createProductImageElement(imageSource) {
   return img;
 }
 // dificuldade ta no maximo.. que isso...
+// teste
 
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
