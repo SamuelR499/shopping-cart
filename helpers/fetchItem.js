@@ -3,7 +3,7 @@ const fetchItem = async (id) => {
   try {
     const response = await fetch(`https://api.mercadolibre.com/items/${id}`);
     const dataFetch = await response.json();
-    console.log(dataFetch);
+    // console.log(dataFetch);
 
     return dataFetch;
   } catch (error) {

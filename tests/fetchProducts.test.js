@@ -24,7 +24,7 @@ describe('1 - Teste a função fecthProducts', () => {
     expect(objeto[0]).toEqual(computadorSearch.results[0])
   });
 
-  test('Teste se, ao chamar a função fetchProducts sem argumento, retorna um erro com a mensagem: You must provide an url. Dica: Lembre-se de usar o new Error("mensagem esperada aqui") para comparar com o objeto retornado da API.', async () => {
+  test('Teste se, ao chamar a função fetchProducts sem argumento, retorna um erro com a mensagem: You must provide an url', async () => {
     const objeto = await fetchProducts();
     expect(objeto).toEqual(new Error('You must provide an url'))
   });
