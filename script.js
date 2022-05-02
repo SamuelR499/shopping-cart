@@ -1,6 +1,10 @@
 const carrinho = document.querySelector('.cart__items');
 const clear = document.querySelector('.empty-cart');
-
+const span = document.createElement('span');
+const total = document.querySelector('.total-price');
+// span.innerText = 'carregando...';
+// span.className = 'loading';
+total.innerHTML = '0';
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -19,10 +23,23 @@ function createCustomElement(element, className, innerText) {
 //   return item.querySelector('span.item__sku').innerText;
 // }
 
+function somaCart() {
+  const items = document.querySelectorAll('.cart__item');
+  let soma = 0;
+  console.log(items);
+
+  for (let i = 0; i < items.length; i += 1) {
+    soma += Number(items[i].innerText.split('$')[1]);
+  }
+  total.innerHTML = `Total: ${soma.toFixed(2)}`;
+  localStorage.setItem('totalItem', total.innerHTML);
+}
+
 function cartItemClickListener(event) {
   // coloque seu código aqui
   event.target.remove();
   saveCartItems(carrinho.innerHTML);
+  somaCart();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -32,6 +49,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+
 async function cartItemClick(event) {
   // fazer o eventro
   const idProduto = await fetchItem(event.target.parentNode.firstChild.innerText);
@@ -39,6 +57,7 @@ async function cartItemClick(event) {
   const { id, title, price } = idProduto;
   carrinho.appendChild(createCartItemElement({ sku: id, name: title, salePrice: price }));
   saveCartItems(carrinho.innerHTML);
+  somaCart();
 }
 
 function createProductItemElement({ sku, name, image }) {
@@ -61,18 +80,26 @@ const pegarElementos = async (item) => {
     sectionItems.appendChild(result);
   });
 };
-
+// ``````````````Bloco de remover todos``````````````
 function removeAll() {
-carrinho.innerHTML = '';
-saveCartItems(carrinho.innerHTML);
+  carrinho.innerHTML = '';
+  saveCartItems(carrinho.innerHTML);
+  somaCart();
 }
-
 clear.addEventListener('click', removeAll);
+// `````````````````````````````````````````````````````
+
 window.onload = () => {
+  total.innerHTML = localStorage.getItem('totalItem');
   carrinho.innerHTML = localStorage.getItem('cartItems');
-  for (let index = 0; index < carrinho.children.length; index += 1) {
-    const element = carrinho.children[index];
+  for (let i = 0; i < carrinho.children.length; i += 1) {
+    const element = carrinho.children[i];
     element.addEventListener('click', cartItemClickListener);
   }
   pegarElementos('computador');
 };
+// https://pt.stackoverflow.com/questions/292455/filtrar-array-de-strings <- Salvou muito!!! gostei da dica!!
+
+// https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/parseInt me ajudou a converter string para numero.
+
+// https://medium.com/aprendajs/convertendo-uma-string-em-um-numero-em-javascript-e6c856fb53be
