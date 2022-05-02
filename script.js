@@ -31,7 +31,7 @@ function somaCart() {
   for (let i = 0; i < items.length; i += 1) {
     soma += Number(items[i].innerText.split('$')[1]);
   }
-  total.innerHTML = `Total: ${soma.toFixed(2)}`;
+  total.innerHTML = `${soma}`;
   localStorage.setItem('totalItem', total.innerHTML);
 }
 
